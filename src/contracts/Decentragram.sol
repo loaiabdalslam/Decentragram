@@ -26,6 +26,14 @@ event ImageCreated (
   address payable author
 );
 
+event ImageTipped (
+  uint id,
+  string hash,
+  string desc,
+  uint tipAmount,
+  address payable author
+);
+
 function uploadImage(string memory _img_hash,string memory _desc) public {
   //requirements
   require(bytes(_img_hash).length > 0  ,'please upload not a blank image');
@@ -42,5 +50,17 @@ function uploadImage(string memory _img_hash,string memory _desc) public {
 }
   
 // tip images
+
+function tipImage (uint memory _id )public payable {
+  Image memory image_ = images[_id];
+  address payable _author = image_.author
+  address(_author).transfer(msg.value)
+  _image.tipAmount =  _image.tipAmount += msg.value
+  images[_id] = _image
+  ImageTipped(_id,_image.hash,_image.desc,_image.tipAmount,_author)
+
+}
+
+
 
 }
