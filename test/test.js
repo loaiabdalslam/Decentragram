@@ -24,8 +24,63 @@ contract('Decentragram', ([deployer, author, tipper]) => {
       const name = await decentragram.name()
       assert.equal(name, 'Decentragram')
     })
+
+
+
+    describe('images', async () => {
+      let result, imageCount
+      //check event
+      const hash = "abc123"
+      const desc = 'image desc'
+      before(async () => {
+        result = await decentragram.uploadImage(hash, desc, { from: author })
+        imageCount = await decentragram.imageCount()
+  
+      })
+      it('creates images', async () => {
+        assert.equal(imageCount, 0)
+        const eventx = result.logs[0].args
+        assert.equal(eventx.id.toNumber(),imageCount.toNumber(),'id is correcet')
+        assert.equal(eventx.hash,hash,'hash is correcet')
+        assert.equal(eventx.desc,desc,'desc is correcet')
+        assert.equal(eventx.tipAmount,0,'tipAmount is correcet')
+        assert.equal(eventx.author,author,'author is correcet')
+
+        await decentragram.uploadImage('', desc, { from: author }).should.be.rejected
+        await decentragram.uploadImage('', '', { from: author }).should.be.rejected
+
+      })
+
+      it("lists images",async ()=>{
+
+        const image_ = await decentragram.images(imageCount)
+        assert.equal(image_.id.toNumber(),imageCount.toNumber(),'id is correcet')
+        assert.equal(image_.hash,hash,'hash is correcet')
+        assert.equal(image_.desc,desc,'desc is correcet')
+        assert.equal(image_.tipAmount,0,'tipAmount is correcet')
+        assert.equal(image_.author,author,'author is correcet')
+
+      })
+
+    })
+
+
   })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
   describe('images', async () => {
     let result, imageCount
     const hash = 'QmV8cfu6n4NT5xRr2AHdKxFMTZEJrA44qgrBCr739BN9Wb'
@@ -97,4 +152,8 @@ contract('Decentragram', ([deployer, author, tipper]) => {
       await decentragram.tipImageOwner(99, { from: tipper, value: web3.utils.toWei('1', 'Ether')}).should.be.rejected;
     })
   })
+
+
+
+  */
 })
