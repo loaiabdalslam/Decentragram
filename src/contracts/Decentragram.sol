@@ -42,7 +42,7 @@ function uploadImage(string memory _img_hash,string memory _desc) public {
 
 
 
-  imageCount = imageCount++;
+  imageCount = imageCount + 1;
   images[imageCount] = Image(imageCount,_img_hash,_desc,0,msg.sender);
   emit ImageCreated(imageCount,_img_hash,_desc,0,msg.sender);
 
@@ -51,13 +51,14 @@ function uploadImage(string memory _img_hash,string memory _desc) public {
   
 // tip images
 
-function tipImage (uint memory _id )public payable {
-  Image memory image_ = images[_id];
-  address payable _author = image_.author
-  address(_author).transfer(msg.value)
-  _image.tipAmount =  _image.tipAmount += msg.value
-  images[_id] = _image
-  ImageTipped(_id,_image.hash,_image.desc,_image.tipAmount,_author)
+function tipImageOwner (uint _id )public payable {
+  require(_id > 0 && _id <= imageCount);
+  Image memory _image = images[_id];
+  address payable _author = _image.author ;
+  address(_author).transfer(msg.value) ;
+  _image.tipAmount =  _image.tipAmount += msg.value ;
+  images[_id] = _image;
+  emit ImageTipped(_id,_image.hash,_image.desc,_image.tipAmount,_author);
 
 }
 
