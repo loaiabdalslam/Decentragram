@@ -11,6 +11,11 @@
         <nav class="navbar navbar-light sticky-top bg-light">
         <a class="navbar-brand" href="#"><i class="fab fa-instagram"></i> Decentragram</a>
             <ul class="nav ">
+                <li class="nav-item m-1" id="account_address">
+
+                </li>
+
+
                 <li class="nav-item">
                     <button type="button" class="btn btn-primary btn-md btn-success"data-toggle="modal" data-target="#exampleModal">Create a new post</button>
                 </li>
@@ -33,14 +38,17 @@
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-body ">
-                  <textarea class="form-control" aria-label="With textarea"></textarea>
+
+                    Title  : <input id="title" class = " m-1 form-control " placeholder= "place image Title Here">
+                    Description : 
+                  <textarea id="description" class="form-control"  placeholder= "place image Description Here" aria-label="With textarea" cols=4 rows=4></textarea>
                   <!--<input class="form-control mr-sm-2 custom-search-modal" type="search" placeholder="" aria-label="Search">-->
                   <i class="fas fa-camera-retro p-1 border rounded mt-1" ></i>
                   <i class="fas fa-map-marker-alt p-1 border rounded mt-1" ></i>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success btn-sm">Publish</button>
+                <button type="button" id="publish" class="btn btn-success btn-sm">Publish</button>
               </div>
             </div>
           </div>
@@ -88,6 +96,8 @@
         <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
     <script src="js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
+
 
     
     </body>
