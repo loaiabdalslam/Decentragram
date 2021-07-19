@@ -53,7 +53,7 @@ contract('Decentragram', ([deployer, author, tipper]) => {
 
       it("lists images",async ()=>{
 
-        const image_ = await decentragram.images(imageCount)
+          const image_ = await decentragram.images(imageCount)
         assert.equal(image_.id.toNumber(),imageCount.toNumber(),'id is correcet')
         assert.equal(image_.hash,hash,'hash is correcet')
         assert.equal(image_.desc,desc,'desc is correcet')

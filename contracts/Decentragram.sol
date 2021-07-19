@@ -9,6 +9,7 @@ uint public imageCount = 0;
 struct Image {
   uint id;
   string hash;
+  string title;
   string desc;
   uint tipAmount;
   address payable author;
@@ -21,6 +22,7 @@ mapping(uint =>Image) public images;
 event ImageCreated (
   uint id,
   string hash,
+  string title,
   string desc,
   uint tipAmount,
   address payable author
@@ -29,22 +31,21 @@ event ImageCreated (
 event ImageTipped (
   uint id,
   string hash,
+  string title,
   string desc,
   uint tipAmount,
   address payable author
 );
 
-function uploadImage(string memory _img_hash,string memory _desc) public {
+function uploadImage(string memory _img_hash,string memory _img_title ,string memory _desc) public {
   //requirements
   require(bytes(_img_hash).length > 0  ,'please upload not a blank image');
   require(bytes(_desc).length  > 0 ,'please write description for image');
   require(msg.sender != address(0x0));
 
-
-
   imageCount = imageCount + 1;
-  images[imageCount] = Image(imageCount,_img_hash,_desc,0,msg.sender);
-  emit ImageCreated(imageCount,_img_hash,_desc,0,msg.sender);
+  images[imageCount] = Image(imageCount,_img_hash,_img_title,_desc,0,msg.sender);
+  emit ImageCreated(imageCount,_img_hash,_img_title,_desc,0,msg.sender);
 
 
 }
@@ -58,7 +59,7 @@ function tipImageOwner (uint _id )public payable {
   address(_author).transfer(msg.value) ;
   _image.tipAmount =  _image.tipAmount += msg.value ;
   images[_id] = _image;
-  emit ImageTipped(_id,_image.hash,_image.desc,_image.tipAmount,_author);
+  emit ImageTipped(_id,_image.hash,_image.title,_image.desc,_image.tipAmount,_author);
 
 }
 
